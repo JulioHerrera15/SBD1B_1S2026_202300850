@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  oracle-db:
+    image: gvenzl/oracle-xe:21-slim-fastart
+    container_name: sbd1-oracle-db
+    environment:
+      - ORACLE_PASSWORD=admin
+      - APP_USER=CEM_USER
+      - APP_USER_PASSWORD=cem_password
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+      - ./database/init.sql:/container-entrypoint-initdb.d/init.sql
+    restart: always
+
+  api-backend:
+    build: .
+    container_name: sbd1-node-api
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_USER=system
+      - DB_PASSWORD=admin
+      - DB_CONNECT_STRING=oracle-db:1521/XEPDB1
+      - PORT=3000
+    depends_on:
+      - oracle-db
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    command: npm start
+
+volumes:
+  oracle_data:

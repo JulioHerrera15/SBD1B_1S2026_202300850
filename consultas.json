@@ -1,0 +1,122 @@
+{
+	"info": {
+		"name": "SBD1 Proyecto 2 - 202300850",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CRUD - POST (Create)",
+			"item": [
+				{
+					"name": "Insertar Persona",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id_persona\": 10,\n    \"identificacion\": \"3000-12345-0101\",\n    \"nombre_completo\": \"Julio Herrera\",\n    \"direccion\": \"Zona 12, Ciudad\",\n    \"telefono\": \"55554444\",\n    \"genero\": \"M\",\n    \"fecha_nacimiento\": \"2000-01-01\",\n    \"Municipio_id_municipio\": 1\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": { "raw": "http://localhost:3000/api/crud/Persona" }
+					}
+				}
+			]
+		},
+		{
+			"name": "CRUD - GET (Read)",
+			"item": [
+				{
+					"name": "Listar Usuarios",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "http://localhost:3000/api/crud/Usuario" }
+					}
+				},
+				{
+					"name": "Buscar por ID",
+					"request": {
+						"method": "GET",
+						"url": {
+							"raw": "http://localhost:3000/api/crud/Persona/buscar?idColumn=id_persona&idValue=1"
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "CRUD - PUT & DELETE",
+			"item": [
+				{
+					"name": "Actualizar Centro",
+					"request": {
+						"method": "PUT",
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"Centro Actualizado\"\n}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": { "raw": "http://localhost:3000/api/crud/Centro_Evaluacion?idColumn=id_centro&idValue=1" }
+					}
+				},
+				{
+					"name": "Eliminar Departamento",
+					"request": {
+						"method": "DELETE",
+						"url": { "raw": "http://localhost:3000/api/crud/Departamento?idColumn=id_departamento&idValue=10" }
+					}
+				}
+			]
+		},
+		{
+			"name": "Estadísticas (Consultas)",
+			"item": [
+				{
+					"name": "1. Estadísticas por Centro",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "http://localhost:3000/api/stats/estadisticas" }
+					}
+				},
+				{
+					"name": "2. Ranking",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "http://localhost:3000/api/stats/ranking" }
+					}
+				},
+				{
+					"name": "3. Peor Pregunta",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "http://localhost:3000/api/stats/peor-pregunta" }
+					}
+				}
+			]
+		},
+		{
+			"name": "Casos de Error (Validación)",
+			"item": [
+				{
+					"name": "Error 400 - Parámetros Incompletos",
+					"request": {
+						"method": "GET",
+						"url": { "raw": "http://localhost:3000/api/crud/Persona/buscar?idColumn=id_persona" }
+					}
+				},
+				{
+					"name": "Error 500 - Llave Duplicada",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"id_departamento\": 1, \"nombre\": \"Duplicado\"}",
+							"options": { "raw": { "language": "json" } }
+						},
+						"url": { "raw": "http://localhost:3000/api/crud/Departamento" }
+					}
+				}
+			]
+		}
+	]
+}
